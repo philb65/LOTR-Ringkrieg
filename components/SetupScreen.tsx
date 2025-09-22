@@ -3,7 +3,7 @@ import { useGameDispatch, useGameState } from '../engine/hooks/useGameState';
 import { GameStateActionType, Faction, FactionName, Team } from '../types';
 import { loadStartPositions } from '../data/loaders';
 import { FactionIcon } from './Icons';
-import { CONFIG } from '../constants';
+import { CONFIG, MAP_IMAGE_URL } from '../constants';
 
 const allPossibleFactionsRaw = loadStartPositions();
 
@@ -58,8 +58,9 @@ const SetupScreen = () => {
     };
 
     const handleStartGame = () => {
-        if (customMapUrl) {
-            dispatch({ type: GameStateActionType.FINISH_SETUP, payload: { mapImageUrl: customMapUrl } });
+        const mapUrl = customMapUrl ?? MAP_IMAGE_URL;
+        if (mapUrl) {
+            dispatch({ type: GameStateActionType.FINISH_SETUP, payload: { mapImageUrl: mapUrl } });
         }
     };
 
@@ -67,7 +68,8 @@ const SetupScreen = () => {
     const schattenFactions = selectedFactions.filter(f => f.team === Team.Schatten);
     const lichtAp = lichtFactions.length > 0 ? Math.floor(CONFIG.TEAM_AP_POOL / lichtFactions.length) : 0;
     const schattenAp = schattenFactions.length > 0 ? Math.floor(CONFIG.TEAM_AP_POOL / schattenFactions.length) : 0;
-    const canStart = lichtFactions.length > 0 && schattenFactions.length > 0 && !!customMapUrl;
+    const mapPreviewUrl = customMapUrl ?? MAP_IMAGE_URL;
+    const canStart = lichtFactions.length > 0 && schattenFactions.length > 0 && !!mapPreviewUrl;
 
     return (
         <div className="flex items-center justify-center min-h-screen p-4 bg-[var(--color-bg)]">
@@ -134,8 +136,8 @@ const SetupScreen = () => {
                     <h2 className="text-2xl font-bold mb-4 text-center">Karte</h2>
                     <div className="p-4 bg-gray-900/50 rounded-lg flex flex-col items-center">
                         <div className="w-full max-w-md h-48 flex items-center justify-center bg-black/20 rounded-md border-2 border-gray-700 mb-4">
-                            {customMapUrl ? (
-                                <img src={customMapUrl} alt="Karten-Vorschau" className="w-full h-full object-contain rounded-md" />
+                            {mapPreviewUrl ? (
+                                <img src={mapPreviewUrl} alt="Karten-Vorschau" className="w-full h-full object-contain rounded-md" />
                             ) : (
                                 <p className="text-gray-400">Bitte lade ein Kartenbild hoch.</p>
                             )}
@@ -151,7 +153,11 @@ const SetupScreen = () => {
                                 </button>
                             )}
                         </div>
-                        <p className="text-xs text-gray-400 mt-2">Das hochgeladene Bild wird als Hintergrundkarte verwendet.</p>
+                        <p className="text-xs text-gray-400 mt-2 text-center">
+                            {customMapUrl
+                                ? 'Das hochgeladene Bild wird als Hintergrundkarte verwendet.'
+                                : 'Die Standardkarte wird verwendet. Du kannst optional eine eigene Karte hochladen.'}
+                        </p>
                     </div>
                 </div>
 
@@ -178,7 +184,7 @@ const SetupScreen = () => {
                     >
                         Match Starten
                     </button>
-                    {!canStart && <p className="text-xs text-gray-400 mt-2">Wähle mindestens eine Fraktion für jedes Team und lade eine Karte hoch.</p>}
+                    {!canStart && <p className="text-xs text-gray-400 mt-2">Wähle mindestens eine Fraktion für jedes Team.</p>}
                 </div>
             </div>
         </div>

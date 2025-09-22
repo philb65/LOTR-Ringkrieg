@@ -2,7 +2,7 @@
 
 
 import { NodeData, EdgeData, UnitTemplate, FactionName, TerrainType, UnitStats, Team, Card, CardDuration, Ability, FactionResearchTree, ResearchNode, ResearchCategory, ResearchEffect, ResearchUnlockCondition, ResearchUnlockConditionType, ShopItem } from '../types';
-import { CONFIG } from '../constants';
+import { CONFIG, MAP_WIDTH, MAP_HEIGHT } from '../constants';
 import { RAW_CARDS_DATA } from './embeddedData';
 import { RAW_NODES_DATA } from './nodes';
 import { RAW_EDGES_DATA } from './edges';
@@ -43,11 +43,31 @@ export const loadNodes = (): NodeData[] => {
         const parts = line.split(',');
         const id = parseInt(parts[0], 10);
         const terrainString = parts[7] as keyof typeof TerrainType;
-        
+
+        const rawX = parseFloat(parts[1]);
+        const rawY = parseFloat(parts[2]);
+        const normX = parseFloat(parts[3]);
+        const normY = parseFloat(parts[4]);
+        const sourceWidth = parseFloat(parts[5]);
+        const sourceHeight = parseFloat(parts[6]);
+
+        const hasNormalized = Number.isFinite(normX) && Number.isFinite(normY);
+        const hasSourceDimensions = Number.isFinite(sourceWidth) && Number.isFinite(sourceHeight) && sourceWidth > 0 && sourceHeight > 0;
+
+        const fallbackX = Number.isFinite(rawX) && hasSourceDimensions
+            ? (rawX / sourceWidth) * MAP_WIDTH
+            : rawX;
+        const fallbackY = Number.isFinite(rawY) && hasSourceDimensions
+            ? (rawY / sourceHeight) * MAP_HEIGHT
+            : rawY;
+
+        const scaledX = hasNormalized ? normX * MAP_WIDTH : fallbackX;
+        const scaledY = hasNormalized ? normY * MAP_HEIGHT : fallbackY;
+
         const node: NodeData = {
             id,
-            x: parseFloat(parts[1]),
-            y: parseFloat(parts[2]),
+            x: scaledX,
+            y: scaledY,
             terrain: TerrainType[terrainString] || TerrainType.Default,
             area: parts[8],
         };

@@ -1,8 +1,9 @@
 import { FactionName } from './types';
 
-export const MAP_IMAGE_URL = ''; // Replace with your map image
-export const MAP_WIDTH = 1419;
-export const MAP_HEIGHT = 1064;
+// Provide a 928x1120 PNG at public/map-background.png or adjust the path to match your asset.
+export const MAP_IMAGE_URL = '/map-background.png';
+export const MAP_WIDTH = 928;
+export const MAP_HEIGHT = 1120;
 
 export const NODE_RADIUS = 8;
 export const UNIT_ICON_SIZE = 24;

@@ -754,6 +754,7 @@ const MapView: React.FC<MapViewProps> = ({ mapImageUrl, nodes, edges, units, fac
             const img = new Image();
             img.src = mapImageUrl;
             img.onload = () => setMapImage(img);
+            img.onerror = () => setMapImage(null);
         } else {
             setMapImage(null);
         }
@@ -761,7 +762,7 @@ const MapView: React.FC<MapViewProps> = ({ mapImageUrl, nodes, edges, units, fac
     
     useEffect(() => {
         const canvas = canvasRef.current;
-        if (!canvas || !mapImage || nodes.length === 0) return;
+        if (!canvas || nodes.length === 0) return;
 
         const setInitialCamera = () => {
             let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
@@ -797,7 +798,7 @@ const MapView: React.FC<MapViewProps> = ({ mapImageUrl, nodes, edges, units, fac
         resizeObserver.observe(canvas);
 
         return () => resizeObserver.disconnect();
-    }, [mapImage, nodes]);
+    }, [nodes, mapImageUrl]);
     
     useEffect(() => {
         const dyingUnits = unitsToRender.filter(u => u.isDying && !prevUnitsRef.current.find(pu => pu.id === u.id && pu.isDying));
@@ -955,7 +956,7 @@ const MapView: React.FC<MapViewProps> = ({ mapImageUrl, nodes, edges, units, fac
     
     useEffect(() => {
         const canvas = canvasRef.current;
-        if (!canvas || !mapImage) return;
+        if (!canvas) return;
 
         const ctx = canvas.getContext('2d');
         if (!ctx) return;
@@ -989,8 +990,10 @@ const MapView: React.FC<MapViewProps> = ({ mapImageUrl, nodes, edges, units, fac
             ctx.translate(canvas.width / 2, canvas.height / 2);
             ctx.scale(cameraRef.current.zoom, cameraRef.current.zoom);
             ctx.translate(-cameraRef.current.centerX, -cameraRef.current.centerY);
-            
-            ctx.drawImage(mapImage, 0, 0, mapImage.naturalWidth, mapImage.naturalHeight);
+
+            if (mapImage) {
+                ctx.drawImage(mapImage, 0, 0);
+            }
 
             // --- Faction Territory Rendering (OPTIMIZED) ---
             if (mapFilters.factionControl.length > 0) {
