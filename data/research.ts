@@ -1,79 +1,824 @@
-export const RAW_RESEARCH_DATA = `factionName,id,name,icon,description,costAP,prerequisites,category,x,y,unlock_condition_type,unlock_condition_target,unlock_condition_value,unlocks_shop_tier,effect_type,effect_target,effect_value,effect_condition
-Gondor/Rohan,gr_off_1,Schärfere Klingen,⚔️,"Verbessert die Waffen der Infanterie. Alle Einheiten mit dem Tag 'Infanterie' erhalten permanent +1 ANG.",5,,Offensive,0,0,,,,stat,ANG,1,Infanterie
-Gondor/Rohan,gr_off_2,Sturmangriffstraining,🐎,"Trainiert Kavallerie im Sturmangriff. Alle Einheiten mit dem Tag 'Kavallerie' erhalten permanent +1 ANG.",8,gr_off_1,Offensive,-150,120,kill_tag,Ork,5,,stat,ANG,1,Kavallerie
-Gondor/Rohan,gr_off_3,Trebuchet-Entwicklung,💣,"Entwickelt mächtige Trebuchets. Schaltet die Einheit 'Belagerungstrupp (Trebuchet-Bedienung)' zur Rekrutierung frei.",12,gr_off_1,Offensive,0,140,round,,3,2,unlock,Belagerungstrupp (Trebuchet-Bedienung),,
-Gondor/Rohan,gr_off_4,Ansturm der Rohirrim,🐎,"Verbessert Rohirrim-Anstürme. Kavallerie erhält +1 HP und die Fähigkeit 'Orkjäger-Ansturm' (+2 ANG vs Orks).",15,gr_off_2;gr_off_3,Offensive,-60,240,,,,stat,HP,1,Kavallerie
-Gondor/Rohan,gr_off_4,Ansturm der Rohirrim,🐎,"Verbessert Rohirrim-Anstürme. Kavallerie erhält +1 HP und die Fähigkeit 'Orkjäger-Ansturm' (+2 ANG vs Orks).",15,gr_off_2;gr_off_3,Offensive,-60,240,,,,ability,"Orkjäger-Ansturm:+2 ANG vs Orks mit Sturmangriff",Kavallerie
-Gondor/Rohan,gr_def_1,Befestigte Stellungen,🛡️,"Verbessert Burgverteidigungen. Alle verbündeten Einheiten auf oder angrenzend an einer Burg erhalten permanent +1 DEF.",6,,Defensive,300,0,,,,special,castle_defense,1,
-Gondor/Rohan,gr_def_2,Granitfundamente,🧱,"Verstärkt Burgmauern mit Granit. Alle Burgen erhalten permanent +5 maximale HP.",10,gr_def_1,Defensive,300,150,capture_node,181,1,,special,castle_hp,5,
-Gondor/Rohan,gr_def_3,Wachtürme,🗼,"Errichtet Wachtürme. Einheiten auf oder angrenzend an Burgen erhalten die Fähigkeit 'Wachturm' (+1 RW-A).",8,gr_def_2,Defensive,220,250,,,,ability,"Wachturm:+1 RW_A bei Burgen",
-Gondor/Rohan,gr_tac_1,Pferde der Mark,💨,"Optimiert die Logistik Rohans. Die Rekrutierungskosten für alle Einheiten mit dem Tag 'Rohan' werden permanent um 1 AP reduziert.",10,,Tactical,600,0,,,,special,rohan_cost,1,
-Gondor/Rohan,gr_tac_2,Netzwerk der Grenzer,👁️,"Baut ein Spähernetzwerk auf. Alle Einheiten mit dem Tag 'Späher' erhalten permanent +1 LOG.",4,gr_tac_1,Tactical,600,150,round,,5,,stat,LOG,1,Späher
-Gondor/Rohan,gr_tac_3,Guerillataktiken,🌲,"Trainiert Grenzer im Waldkampf. Sie erhalten die Fähigkeit 'Waldkampf' (+1 ANG & +1 DEF in Wäldern).",8,gr_tac_2,Tactical,600,300,,,,ability,"Waldkampf:+1 ANG & +1 DEF in Wäldern",Späher
-Gondor/Rohan,gr_tac_4,Geländeanpassung,🏞️,"Späher passen sich dem Gelände an. Sie erhalten die Fähigkeit 'Geländeanpassung' (+1 DEF in Wald/Bergen).",10,gr_tac_3,Tactical,600,450,,,,ability,"Geländeanpassung:+1 DEF in Wald/Bergen",Späher
-Mordor,mo_off_1,Peitsche des Aufsehers,🪢,"Peitschenhiebe und Drohungen zwingen die Orks zu mehr Disziplin und verleihen allen 'Ork'-Einheiten +1 ANG.",5,,Offensive,0,0,,,,stat,ANG,1,Ork
-Mordor,mo_off_2,Bösartige Warge,🐺,"Züchtet größere und wildere Warge. Dies verleiht allen 'Warg'-Einheiten +1 ANG.",8,mo_off_1,Offensive,-80,150,kill_tag,Kavallerie,3,,stat,ANG,1,Warg
-Mordor,mo_off_3,Olog-hai Zucht,👹,"Sarumans Magie perfektioniert die Trolle zu den mächtigen Olog-hai. Schaltet die Elite-Einheit 'Olog-hai' frei.",15,mo_off_1,Offensive,80,150,kill_tag,Elite,2,3,unlock,Olog-hai,,
-Mordor,mo_off_4,Hexenmeister von Morgul,🧙,"Schaltet die mächtige Magieeinheit 'Hexenmeister von Morgul' frei.",18,mo_off_3,Offensive,40,270,round,,10,4,unlock,Hexenmeister von Morgul,,
-Mordor,mo_def_1,Dunkle Festungen,🏰,"Verstärkt Festungen mit Morgul-Magie. Einheiten auf oder neben Burgen erhalten +1 DEF.",6,,Defensive,300,0,,,,special,castle_defense,1,
-Mordor,mo_def_2,Opfergruben,☠️,"Endlose Horden strömen aus den Gruben. Die Rekrutierungskosten für alle 'Ork'-Einheiten werden um 1 AP reduziert.",12,mo_def_1,Defensive,300,150,,,,special,orc_cost,1,
-Mordor,mo_def_3,Schatten von Barad-dûr,🏰,"Einheiten auf Burgen erhalten +2 DEF.",10,mo_def_2,Defensive,220,250,,,,ability,"Burg-Verteidigung:+2 DEF auf Burgen",
-Mordor,mo_tac_1,Hinterhaltstaktiken,🕸️,"Orks lernen aus dem Schatten zuzuschlagen und verschafft ihnen beim ersten Angriff einen Vorteil.",7,,Tactical,600,0,,,,ability,"Hinterhalt:Verursacht +2 Schaden beim ersten Angriff",Ork
-Mordor,mo_tac_2,Der Wille Saurons,👁️,"Die Gegenwart des Dunklen Herrschers ist spürbar. Alle Elite-Einheiten erhalten eine 'Furcht'-Aura (-1 ANG für Feinde in RW 1).",15,mo_tac_1,Tactical,600,150,,,,ability,"Furcht:Feinde in RW 1 haben -1 ANG",Elite
-Mordor,mo_tac_3,Verräterische Pfade,🗺️,"Ork-Einheiten ignorieren Geländemali in Sümpfen.",10,mo_tac_2,Tactical,600,300,,,,ability,"Verräterische Pfade:Ignoriert Sumpf-Mali",Ork
-Elben,el_off_1,Elbische Klingen,⚔️,"Unsere Schwertmeister verfeinern die Klingen unserer Infanterie und verleihen ihnen +1 ANG.",5,,Offensive,0,0,,,,stat,ANG,1,Infanterie
-Elben,el_off_2,Pfeile des Lothlorien,🏹,"+1 RW_A für alle Bogen-Einheiten damit sie aus noch größerer Entfernung treffen.",8,el_off_1,Offensive,0,150,kill_tag,Kavallerie,3,,stat,RW_A,1,Bogen
-Elben,el_off_3,Goldener Wald,🌳,"Schaltet Noldor-Elite frei (die Elitekrieger der Elben) und verbessert den Shop.",12,el_off_2,Offensive,0,300,,2,unlock,Noldor-Elite,,
-Elben,el_def_1,Mantel der Elben,🍃,"Unsere Infanterie lernt sich im Wald zu verstecken was ihnen +1 DEF in Wäldern verleiht.",6,,Defensive,300,0,,,,ability,"Walddeckung:+1 DEF im Wald",Infanterie
-Elben,el_def_2,Segen der Valar,✨,"Ein Segen schützt unsere Elite-Einheiten und verleiht ihnen +1 DEF.",10,el_def_1,Defensive,300,150,,,,stat,DEF,1,Elite
-Elben,el_tac_1,Leichte Schritte,💨,"Elbische Anmut erlaubt unserer Infanterie sich schneller durch Wälder zu bewegen (+1 LOG).",7,,Tactical,600,0,,,,ability,"Waldläufer:+1 LOG im Wald",Infanterie
-Elben,el_tac_2,Lembas-Brot,🍞,"Schaltet einen mächtigen Heilgegenstand im Shop frei und verbessert den Shop auf Tier 3.",15,el_tac_1,Tactical,600,150,,3,special,shop_tier,3,
-Zwerge,dw_off_1,Runenäxte,🪓,"Unsere Schmiede schmieden Äxte mit Runen welche allen Axt-Einheiten +1 ANG verleihen.",5,,Offensive,0,0,,,,stat,ANG,1,Axt
-Zwerge,dw_off_2,Meister-Armbrüste,🎯,"Verbessert die Reichweite unserer Armbrustschützen um +1 RW_A.",8,dw_off_1,Offensive,0,150,,,,stat,RW_A,1,Armbrust
-Zwerge,dw_off_3,Zorn der Ahnen,🔥,"Schaltet Shop-Tier 2 frei. Hammerträger erhalten die Fähigkeit 'Zorn des Berges' (+3 ANG wenn verletzt).",12,dw_off_2,Offensive,0,300,,2,ability,"Zorn des Berges:+3 ANG wenn HP < 50%",Hammerträger
-Zwerge,dw_def_1,Gromril-Rüstung,🛡️,"Schmiedet extrem widerstandsfähige Rüstungen. Alle Infanterie-Einheiten erhalten +1 DEF.",7,,Defensive,300,0,,,,stat,DEF,1,Infanterie
-Zwerge,dw_def_2,Schildwall,🧱,"Unsere Schildträger meistern die Schildwall-Formation und erhalten +2 DEF wenn sie nicht bewegt wurden.",10,dw_def_1,Defensive,300,150,,,,ability,"Schildwall:+2 DEF wenn nicht bewegt",Schildträger
-Zwerge,dw_tac_1,Schätze des Berges,💎,"Schaltet Shop-Tier 2 frei und die Möglichkeit permanente AP-Boni zu kaufen.",15,,Tactical,600,0,,2,special,shop_tier,2,
-Zwerge,dw_tac_2,Geheime Stollen,🚇,"Schaltet eine mächtige Fähigkeit im Shop frei um Einheiten schnell zu verlegen und schaltet Shop-Tier 3 frei.",12,dw_tac_1,Tactical,600,150,,3,special,shop_tier,3,
-Isengard,is_off_1,Uruk-hai Schmieden,🔨,"+1 ANG für alle 'Uruk-hai' Einheiten.",5,,Offensive,0,0,,,,stat,ANG,1,Uruk-hai
-Isengard,is_off_2,Sprengladungen,💣,"Schaltet die Einheit 'Uruk-Sappeure' frei um Mauern zu sprengen.",10,is_off_1,Offensive,0,150,round,,4,,unlock,Uruk-Sappeure,,
-Isengard,is_off_3,Berserkerwut,😡,"Schaltet 'Uruk-Berserker' frei - furchtlose Sturmtruppen - und verbessert den Shop.",12,is_off_2,Offensive,0,300,,2,unlock,Uruk-Berserker,,
-Isengard,is_def_1,Orthanc-Stahl,🗼,"Verbessert die Rüstungen der Uruk-Pikenträger. +1 DEF für 'Speer'-Einheiten.",6,,Defensive,300,0,,,,stat,DEF,1,Speer
-Isengard,is_def_2,Armbrust-Reichweite,🎯,"Verbessert die Zielvorrichtungen der Uruk-Armbrüste. +1 RW_A für 'Armbrust'-Einheiten.",8,is_def_1,Defensive,300,150,,,,stat,RW_A,1,Armbrust
-Isengard,is_tac_1,Warg-Zucht,🐺,"Verbessert die Warge auf denen die Reiter Isengards reiten. +1 LOG für 'Warg'-Einheiten.",7,,Tactical,600,0,,,,stat,LOG,1,Warg
-Isengard,is_tac_2,Der Wille Sarumans,✋,"Schaltet Shop-Tier 3 frei und mächtige temporäre Boni.",15,is_tac_1,Tactical,600,150,,3,special,shop_tier,3,
-Angmar,an_off_1,Grabeskälte,❄️,"Verleiht allen Einheiten die Fähigkeit 'Frost-Angriff'. Diese verlangsamt die Bewegung des Ziels.",8,,Offensive,0,0,,,,ability,"Frost-Angriff:Ziel hat -1 LOG für 1 Runde",
-Angmar,an_off_2,Geisterbeschwörung,👻,"Schaltet 'Grabunholde' frei - furchterregende Geisterwesen.",12,an_off_1,Offensive,0,150,round,,6,,unlock,Grabunholde,,
-Angmar,an_off_3,Morgul-Klinge,🗡️,"Schaltet Shop-Tier 2 frei. Elite-Einheiten können Feinde mit einem Treffer vernichten.",15,an_off_2,Offensive,0,300,,2,ability,"Morgul-Klinge:5% Chance Ziel sofort zu töten",Elite
-Angmar,an_def_1,Horden aus dem Norden,👹,"Die endlosen Horden Angmars sind billig zu rekrutieren. -1 AP Kosten für 'Ork'-Einheiten.",10,,Defensive,300,0,,,,special,orc_cost,1,
-Angmar,an_def_2,Furchtaura,😱,"Elite-Einheiten strahlen eine Aura der Furcht aus. Feinde in RW 1 haben -1 ANG.",12,an_def_1,Defensive,300,150,,,,ability,"Furcht:Feinde in RW 1 haben -1 ANG",Elite
-Angmar,an_tac_1,Hexerei,🔮,"Schamanen können feindliche Rüstungen mit einem Fluch schwächen.",9,,Tactical,600,0,,,,ability,"Rüstungsfluch:Ziel hat -1 DEF für 1 Runde",Schamanen
-Angmar,an_tac_2,Ewige Nacht,🌑,"Schaltet Shop-Tier 3 frei was mächtige globale Effekte ermöglicht.",15,an_tac_1,Tactical,600,150,,3,special,shop_tier,3,
-Gondor/Rohan,gr_off_5,Kampferfahrung,💪,"Durch Kampferfahrung erhalten alle Einheiten mit dem Tag 'Infanterie' permanent +1 HP.",7,gr_off_1,Offensive,150,120,,,,stat,HP,1,Infanterie
-Gondor/Rohan,gr_def_4,Wachturm-Verbesserungen,🗼,"Verbessert Wachtürme. Einheiten bei Burgen erhalten +1 DEF und +1 RW_A.",10,gr_def_2,Defensive,380,250,,,,ability,"Verbesserte Wachtürme:+1 DEF & +1 RW_A bei Burgen",
-Gondor/Rohan,gr_tac_5,Versorgungslinien,📦,"Verbessert Versorgungslinien. Alle Einheiten mit dem Tag 'Banner' erhalten permanent +1 RW_U.",8,gr_tac_1,Tactical,520,150,,,,stat,RW_U,1,Banner
-Mordor,mo_off_5,Troll-Zorn,😡,"Alle Troll-Einheiten erhalten +2 ANG wenn ihre HP unter 50% fallen.",12,mo_off_3,Offensive,120,270,,,,ability,"Troll-Zorn:+2 ANG wenn HP < 50%",Troll
-Mordor,mo_def_4,Unendlicher Schwarm,💀,"Die Rekrutierungskosten für alle 'Ork'-Einheiten werden um 1 AP reduziert.",15,mo_def_2,Defensive,380,250,,,,special,orc_cost,1,
-Mordor,mo_tac_4,Ork-Plänkler,🌲,"Ork-Einheiten erhalten +2 LOG in Wald- oder Sumpfgelände.",9,mo_tac_1,Tactical,680,150,,,,ability,"Ork-Plänkler:+2 LOG in Wald/Sumpf",Ork
-Elben,el_off_4,Silberpfeile,✨,"Bogen-Einheiten erhalten +2 ANG gegen 'Untote' und 'Troll'-Einheiten.",10,el_off_2,Offensive,-80,250,,,,ability,"Silberpfeile:+2 ANG vs Untote/Trolle",Bogen
-Elben,el_def_3,Segen der Valar,🛡️,"Elite-Einheiten ignorieren den ersten Schadenspunkt im Kampf.",14,el_def_1,Defensive,220,100,,,,ability,"Segen der Valar:Ignoriert 1. Schaden",Elite
-Elben,el_tac_3,Waldläufer-Taktiken,🍃,"Späher-Einheiten erhalten +1 LOG im Wald.",10,el_tac_1,Tactical,680,100,,,,ability,"Waldläufer-Taktiken:+1 LOG im Wald",Späher
-Elben,el_off_5,Noldor-Klingenmeister,⚔️,"Noldor-Elite erhalten +1 ANG.",14,el_off_3,Offensive,0,400,,,,stat,ANG,1,Elite
-Elben,el_def_4,Segen Valinors,💖,"Elite-Einheiten mit dieser Fähigkeit regenerieren 1 HP am Ende des Zuges, wenn sie versorgt sind.",18,el_def_3,Defensive,220,200,,,,ability,"Segen Valinors:Heilt 1 HP/Runde",Elite
-Elben,el_tac_4,Silvanische Pfade,🌿,"Waldelben-Jäger erhalten +1 LOG und +1 DEF, wenn sie sich im Wald befinden.",12,el_tac_3,Tactical,760,100,,,,ability,"Silvanische Pfade:+1 LOG & +1 DEF in Wäldern",Waldelben-Jäger
-Zwerge,dw_off_4,Gromril-Waffen,⚔️,"Alle Einheiten mit dem Tag 'Axt' oder 'Hammerträger' erhalten +1 ANG.",14,dw_off_3,Offensive,80,400,,,,stat,ANG,1,Axt;Hammerträger
-Zwerge,dw_def_3,Standhaftigkeit des Berges,🏔️,"Alle Infanterie-Einheiten erhalten +2 HP.",16,dw_def_2,Defensive,300,250,,,,stat,HP,2,Infanterie
-Zwerge,dw_def_4,Schildmeister,🛡️,"Alle Einheiten mit dem Tag 'Schildträger' erhalten zusätzlich +1 DEF.",12,dw_def_3,Defensive,300,350,,,,stat,DEF,1,Schildträger
-Zwerge,dw_tac_3,Belagerungsmeister,💣,"Belagerungseinheiten verursachen +2 ANG gegen Burgen.",14,dw_tac_2,Tactical,600,250,,,,ability,"Belagerungsmeister:+2 ANG vs Burgen",Belagerung
-Isengard,is_off_4,Orthanc's Schmieden,🏭,"Alle Uruk-hai Einheiten erhalten +1 HP.",15,is_off_3,Offensive,-80,400,,,,stat,HP,1,Uruk-hai
-Isengard,is_def_3,Kreuzungen,🐾,"Uruk-hai Einheiten ignorieren Geländemali für Bewegung.",10,is_def_2,Defensive,300,250,,,,ability,"Kreuzungen:Ignoriert Geländemali",Uruk-hai
-Isengard,is_def_4,Orthanc-Wachturm,🗼,"Einheiten auf oder angrenzend an Burgen erhalten +1 RW-A.",10,is_def_3,Defensive,380,350,,,,ability,"Orthanc-Wachturm:+1 RW-A bei Burgen",
-Isengard,is_tac_3,Warg-Dominanz,🐺,"Wargreiter erhalten +1 ANG gegen Kavallerie-Einheiten.",12,is_tac_1,Tactical,680,100,,,,ability,"Warg-Dominanz:+1 ANG vs Kavallerie",Wargreiter
-Isengard,is_tac_4,Industrielle Effizienz,⚙️,"Die Rekrutierungskosten für alle 'Uruk-hai'-Einheiten werden permanent um 1 AP reduziert.",20,is_tac_2,Tactical,600,250,,,,special,uruk_cost_reduction,1,
-Angmar,an_off_4,Geisterklingen,🗡️,"Alle untoten Einheiten erhalten die Fähigkeit 'Geisterklingen', die 1 Punkt der gegnerischen Verteidigung ignoriert.",15,an_off_3,Offensive,80,400,,,,ability,"Geisterklingen:Ignoriert 1 DEF",Untote
-Angmar,an_def_3,Rhudaur-Pakt,🤝,"Alle Einheiten mit dem Tag 'Rhudaur' erhalten +1 ANG und +1 HP.",10,an_def_1,Defensive,380,100,,,,stat,ANG,1,Rhudaur
-Angmar,an_def_3,Rhudaur-Pakt,🤝,"Alle Einheiten mit dem Tag 'Rhudaur' erhalten +1 ANG und +1 HP.",10,an_def_1,Defensive,380,100,,,,stat,HP,1,Rhudaur
-Angmar,an_def_4,Grabunhold-Meister,👻,"Alle Einheiten mit dem Tag 'Grabunholde' erhalten +1 DEF und +2 HP.",14,an_def_2,Defensive,300,250,,,,stat,DEF,1,Grabunholde
-Angmar,an_def_4,Grabunhold-Meister,👻,"Alle Einheiten mit dem Tag 'Grabunholde' erhalten +1 DEF und +2 HP.",14,an_def_2,Defensive,300,250,,,,stat,HP,2,Grabunholde
-Mordor,mo_off_6,Unterstützung aus dem Süden,🐘,"Verbündete aus Harad schließen sich Euren Armeen an. Schaltet Haradrim-Speerkämpfer frei.",10,mo_off_1,Offensive,0,150,round,,8,,unlock,Haradrim-Speerkämpfer,,
-`
+import { FactionName, ResearchCategory, ResearchUnlockConditionType } from '../types';
+
+type StatTarget = 'ANG' | 'DEF' | 'HP' | 'LOG' | 'RW_U' | 'RW_A';
+
+type EffectDef =
+    | { type: 'stat'; target: StatTarget; value: number; conditionTag?: string }
+    | { type: 'ability'; ability: { name: string; description: string }; conditionTag?: string }
+    | { type: 'unlock'; unit: string }
+    | { type: 'special'; target: 'shop_tier'; value: number };
+
+interface ResearchNodeDef {
+    id: string;
+    name: string;
+    icon: string;
+    description: string;
+    category: ResearchCategory;
+    effects: EffectDef[];
+    unlockCondition?: { type: ResearchUnlockConditionType; target: string; value: number };
+    unlocksShopTier?: number | null;
+}
+
+type FactionResearch = { faction: FactionName; prefix: string; nodes: ResearchNodeDef[] };
+
+const COSTS = [6, 9, 12, 15];
+const CATEGORY_X: Record<ResearchCategory, number> = {
+    [ResearchCategory.Offensive]: 0,
+    [ResearchCategory.Defensive]: 220,
+    [ResearchCategory.Tactical]: -220,
+};
+
+const abilityEffect = (name: string, description: string, conditionTag?: string): EffectDef => ({
+    type: 'ability',
+    ability: { name, description },
+    conditionTag,
+});
+
+const statEffect = (target: StatTarget, value: number, conditionTag?: string): EffectDef => ({
+    type: 'stat',
+    target,
+    value,
+    conditionTag,
+});
+
+const unlockUnit = (unit: string): EffectDef => ({ type: 'unlock', unit });
+const shopTier = (tier: number): EffectDef => ({ type: 'special', target: 'shop_tier', value: tier });
+
+const createLinearNodes = (
+    faction: FactionName,
+    prefix: string,
+    category: ResearchCategory,
+    nodeDefs: Omit<ResearchNodeDef, 'category'>[],
+    unlockConditionFinal: { type: ResearchUnlockConditionType; target: string; value: number }
+): string[] => {
+    return nodeDefs.map((def, index) => {
+        const node: ResearchNodeDef = {
+            ...def,
+            category,
+            unlockCondition: index === nodeDefs.length - 1 ? unlockConditionFinal : def.unlockCondition,
+        };
+        const cost = COSTS[index] ?? COSTS[COSTS.length - 1];
+        const prerequisites = index === 0 ? '' : `${prefix}_${category}_${index}`;
+        const id = `${prefix}_${category}_${index + 1}`;
+        const x = CATEGORY_X[category];
+        const y = index * 120;
+        const rows: string[] = [];
+
+        node.effects.forEach(effect => {
+            let effectType = '';
+            let effectTarget = '';
+            let effectValue = '';
+            const effectCondition = effect.type === 'ability' || effect.type === 'stat' ? effect.conditionTag ?? '' : '';
+            let unlocksShopTier: number | null = null;
+
+            switch (effect.type) {
+                case 'stat':
+                    effectType = 'stat';
+                    effectTarget = effect.target;
+                    effectValue = effect.value.toString();
+                    break;
+                case 'ability':
+                    effectType = 'ability';
+                    effectTarget = effect.ability.name;
+                    effectValue = `${effect.ability.name}:${effect.ability.description}`;
+                    break;
+                case 'unlock':
+                    effectType = 'unlock';
+                    effectTarget = effect.unit;
+                    break;
+                case 'special':
+                    effectType = 'special';
+                    effectTarget = effect.target;
+                    effectValue = effect.value.toString();
+                    if (effect.target === 'shop_tier') {
+                        unlocksShopTier = effect.value;
+                    }
+                    break;
+            }
+
+            const conditionType = node.unlockCondition?.type ?? '';
+            const conditionTarget = node.unlockCondition?.target ?? '';
+            const conditionValue = node.unlockCondition ? node.unlockCondition.value.toString() : '';
+
+            const shopTierField =
+                effectType === 'special' && effectTarget === 'shop_tier'
+                    ? unlocksShopTier?.toString() ?? ''
+                    : node.unlocksShopTier?.toString() ?? '';
+
+            rows.push(
+                [
+                    faction,
+                    id,
+                    node.name,
+                    node.icon,
+                    node.description,
+                    cost,
+                    prerequisites,
+                    category,
+                    x,
+                    y,
+                    conditionType,
+                    conditionTarget,
+                    conditionValue,
+                    shopTierField,
+                    effectType,
+                    effectTarget,
+                    effectValue,
+                    effectCondition,
+                ].join(',')
+            );
+        });
+
+        return rows.join('\n');
+    });
+};
+
+const factions: FactionResearch[] = [
+    {
+        faction: 'Gondor/Rohan',
+        prefix: 'gr',
+        nodes: [
+            {
+                id: 'off_1',
+                name: 'Klingen aus Westen',
+                icon: '⚔️',
+                description: '+1 ANG für Infanterie durch verbesserte Schmiedekunst.',
+                category: ResearchCategory.Offensive,
+                effects: [statEffect('ANG', 1, 'Infanterie')],
+            },
+            {
+                id: 'off_2',
+                name: 'Sturmreiten',
+                icon: '🐎',
+                description: 'Kavallerie erhält den Sturmangriff, um im Ansturm zusätzlichen Schaden zu verursachen.',
+                category: ResearchCategory.Offensive,
+                effects: [abilityEffect('Sturmangriff', '+1 ANG nach einer Bewegung vor dem Angriff.', 'Kavallerie')],
+            },
+            {
+                id: 'off_3',
+                name: 'Belagerungstreiber',
+                icon: '🏹',
+                description: 'Belagerungstrupps können jetzt Trebuchets einsetzen.',
+                category: ResearchCategory.Offensive,
+                effects: [unlockUnit('Belagerungstrupp (Trebuchet-Bedienung)')],
+            },
+            {
+                id: 'off_4',
+                name: 'Vorstoß der Rohirrim',
+                icon: '🎖️',
+                description: 'Verbesserter Kavallerieangriff dank perfekter Formation.',
+                category: ResearchCategory.Offensive,
+                effects: [abilityEffect('Speerspitze', 'Erhöht den Sturmangriff-Bonus auf +2 ANG.', 'Kavallerie')],
+            },
+            {
+                id: 'def_1',
+                name: 'Stadtverteidiger',
+                icon: '🛡️',
+                description: 'Infanterie erhält +1 DEF zur Verteidigung der Mauern.',
+                category: ResearchCategory.Defensive,
+                effects: [statEffect('DEF', 1, 'Infanterie')],
+            },
+            {
+                id: 'def_2',
+                name: 'Burgdisziplin',
+                icon: '🏰',
+                description: 'Infanterie verteidigt Burgen mit zusätzlichem Schutz.',
+                category: ResearchCategory.Defensive,
+                effects: [abilityEffect('Burg-Verteidigung', '+2 DEF auf Burgen.', 'Infanterie')],
+            },
+            {
+                id: 'def_3',
+                name: 'Veteranen der Sieben Tore',
+                icon: '❤️',
+                description: 'Kämpferische Erfahrung erhöht die Widerstandskraft.',
+                category: ResearchCategory.Defensive,
+                effects: [statEffect('HP', 2, 'Infanterie')],
+            },
+            {
+                id: 'def_4',
+                name: 'Wachtürme Minas Tiriths',
+                icon: '🗼',
+                description: 'Verbessert die Verteidigung an Burgen mit Wachtürmen.',
+                category: ResearchCategory.Defensive,
+                effects: [abilityEffect('Verbesserte Wachtürme', '+1 DEF und +1 RW-A bei Burgen.')],
+                unlockCondition: { type: 'round', target: '', value: 5 },
+            },
+            {
+                id: 'tac_1',
+                name: 'Grenzerpfade',
+                icon: '👣',
+                description: 'Späher bewegen sich schneller durch das Land.',
+                category: ResearchCategory.Tactical,
+                effects: [statEffect('LOG', 1, 'Späher')],
+            },
+            {
+                id: 'tac_2',
+                name: 'Kundschafter im Wald',
+                icon: '🌲',
+                description: 'Späher erhalten Vorteile in schwierigem Gelände.',
+                category: ResearchCategory.Tactical,
+                effects: [abilityEffect('Geländeanpassung', '+1 DEF in Wäldern oder Bergen.', 'Späher')],
+            },
+            {
+                id: 'tac_3',
+                name: 'Banner der freien Völker',
+                icon: '🎏',
+                description: 'Banner-Einheiten stärken ihre Verbündeten.',
+                category: ResearchCategory.Tactical,
+                effects: [
+                    abilityEffect('Für Gondor!', 'Verbündete in RW-U erhalten +1 DEF.', 'Banner'),
+                    shopTier(2),
+                ],
+            },
+            {
+                id: 'tac_4',
+                name: 'Gefüllte Vorratslager',
+                icon: '🏪',
+                description: 'Erweitert den Zugang zu strategischen Ressourcen.',
+                category: ResearchCategory.Tactical,
+                effects: [shopTier(3)],
+                unlockCondition: { type: 'round', target: '', value: 6 },
+            },
+        ],
+    },
+    {
+        faction: 'Mordor',
+        prefix: 'mo',
+        nodes: [
+            {
+                id: 'off_1',
+                name: 'Schmieden der Orks',
+                icon: '⚔️',
+                description: 'Ork-Krieger erhalten schärfere Waffen.',
+                category: ResearchCategory.Offensive,
+                effects: [statEffect('ANG', 1, 'Ork')],
+            },
+            {
+                id: 'off_2',
+                name: 'Blutrausch',
+                icon: '🔥',
+                description: 'Orks kämpfen wilder, wenn sie verwundet sind.',
+                category: ResearchCategory.Offensive,
+                effects: [abilityEffect('Berserkerwut', '+2 ANG unter 50% HP.', 'Ork')],
+            },
+            {
+                id: 'off_3',
+                name: 'Zucht der Olog-hai',
+                icon: '🔓',
+                description: 'Schaltet Olog-hai zur Rekrutierung frei.',
+                category: ResearchCategory.Offensive,
+                effects: [unlockUnit('Olog-hai')],
+            },
+            {
+                id: 'off_4',
+                name: 'Grimmiger Trollzorn',
+                icon: '🎖️',
+                description: 'Trolle werden noch gefährlicher, wenn sie verletzt sind.',
+                category: ResearchCategory.Offensive,
+                effects: [abilityEffect('Troll-Zorn', '+2 ANG unter 50% HP.', 'Troll')],
+            },
+            {
+                id: 'def_1',
+                name: 'Schwarze Rüstungen',
+                icon: '🛡️',
+                description: 'Orks erhalten verbesserte Rüstungen.',
+                category: ResearchCategory.Defensive,
+                effects: [statEffect('DEF', 1, 'Ork')],
+            },
+            {
+                id: 'def_2',
+                name: 'Horden der Schatten',
+                icon: '👥',
+                description: 'Orks profitieren von ihrer Masse.',
+                category: ResearchCategory.Defensive,
+                effects: [abilityEffect('Massen an Orks', '+2 ANG und +2 DEF, wenn viele Orks nah sind.', 'Ork')],
+            },
+            {
+                id: 'def_3',
+                name: 'Ernährung aus den Gruben',
+                icon: '❤️',
+                description: 'Orks halten mehr aus.',
+                category: ResearchCategory.Defensive,
+                effects: [statEffect('HP', 2, 'Ork')],
+            },
+            {
+                id: 'def_4',
+                name: 'Festungen Saurons',
+                icon: '🏰',
+                description: 'Orks verteidigen Burgen mit schwarzer Magie.',
+                category: ResearchCategory.Defensive,
+                effects: [abilityEffect('Burg-Verteidigung', '+2 DEF auf Burgen.', 'Ork')],
+                unlockCondition: { type: 'round', target: '', value: 5 },
+            },
+            {
+                id: 'tac_1',
+                name: 'Warge der Jagd',
+                icon: '🐺',
+                description: 'Wargreiter bewegen sich schneller.',
+                category: ResearchCategory.Tactical,
+                effects: [statEffect('LOG', 1, 'Warg')],
+            },
+            {
+                id: 'tac_2',
+                name: 'Pfad der Schatten',
+                icon: '🌲',
+                description: 'Orks umgehen Hindernisse in schwierigem Gelände.',
+                category: ResearchCategory.Tactical,
+                effects: [abilityEffect('Ork-Plänkler', '+2 LOG in Wald- oder Sumpfgelände.', 'Ork')],
+            },
+            {
+                id: 'tac_3',
+                name: 'Herr der Warge',
+                icon: '🎏',
+                description: 'Wargreiter dominieren gegnerische Kavallerie.',
+                category: ResearchCategory.Tactical,
+                effects: [abilityEffect('Warg-Dominanz', '+1 ANG gegen Kavallerie.', 'Warg'), shopTier(2)],
+            },
+            {
+                id: 'tac_4',
+                name: 'Schwarze Märkte',
+                icon: '🏪',
+                description: 'Erweitert die taktischen Möglichkeiten im Shop.',
+                category: ResearchCategory.Tactical,
+                effects: [shopTier(3)],
+                unlockCondition: { type: 'round', target: '', value: 6 },
+            },
+        ],
+    },
+    {
+        faction: 'Elben',
+        prefix: 'el',
+        nodes: [
+            {
+                id: 'off_1',
+                name: 'Klingentanz',
+                icon: '⚔️',
+                description: 'Elbische Bogenschützen schießen mit gesteigerter Präzision.',
+                category: ResearchCategory.Offensive,
+                effects: [statEffect('ANG', 1, 'Bogen')],
+            },
+            {
+                id: 'off_2',
+                name: 'Adlerblicke',
+                icon: '👁️',
+                description: 'Bogenschützen treffen auch auf große Entfernung.',
+                category: ResearchCategory.Offensive,
+                effects: [abilityEffect('Adlerauge', '+1 ANG über Distanz 1.', 'Bogen')],
+            },
+            {
+                id: 'off_3',
+                name: 'Kriegskunst der Noldor',
+                icon: '🔓',
+                description: 'Die legendäre Noldor-Elite kann rekrutiert werden.',
+                category: ResearchCategory.Offensive,
+                effects: [unlockUnit('Noldor-Elite')],
+            },
+            {
+                id: 'off_4',
+                name: 'Silberpfeile',
+                icon: '✨',
+                description: 'Bogen-Einheiten erhalten Silberpfeile gegen dunkle Kreaturen.',
+                category: ResearchCategory.Offensive,
+                effects: [abilityEffect('Silberpfeile', '+2 ANG gegen Untote und Trolle.', 'Bogen')],
+            },
+            {
+                id: 'def_1',
+                name: 'Mantel des Waldes',
+                icon: '🍃',
+                description: 'Infanterie versteckt sich besser im Wald.',
+                category: ResearchCategory.Defensive,
+                effects: [statEffect('DEF', 1, 'Infanterie')],
+            },
+            {
+                id: 'def_2',
+                name: 'Waldwache',
+                icon: '🌲',
+                description: 'Elben erhalten Vorteile, wenn sie im Wald kämpfen.',
+                category: ResearchCategory.Defensive,
+                effects: [abilityEffect('Waldläufer', '+1 ANG und +1 DEF in Wäldern.', 'Infanterie')],
+            },
+            {
+                id: 'def_3',
+                name: 'Ewige Standhaftigkeit',
+                icon: '❤️',
+                description: 'Elbische Linien halten länger stand.',
+                category: ResearchCategory.Defensive,
+                effects: [statEffect('HP', 2, 'Infanterie')],
+            },
+            {
+                id: 'def_4',
+                name: 'Wächter der Weißen Bäume',
+                icon: '🗼',
+                description: 'Elbische Wächter verteidigen Burgen meisterhaft.',
+                category: ResearchCategory.Defensive,
+                effects: [abilityEffect('Wächter des Turms', '+2 DEF auf Burgen.', 'Infanterie')],
+                unlockCondition: { type: 'round', target: '', value: 5 },
+            },
+            {
+                id: 'tac_1',
+                name: 'Schritte ohne Laut',
+                icon: '👣',
+                description: 'Späher bewegen sich mit elbischer Anmut.',
+                category: ResearchCategory.Tactical,
+                effects: [statEffect('LOG', 1, 'Späher')],
+            },
+            {
+                id: 'tac_2',
+                name: 'Pfade des Waldes',
+                icon: '🌲',
+                description: 'Späher erhalten Vorteile im Dickicht.',
+                category: ResearchCategory.Tactical,
+                effects: [abilityEffect('Waldläufer-Taktiken', '+1 LOG im Wald.', 'Späher')],
+            },
+            {
+                id: 'tac_3',
+                name: 'Banner des Sternenlichts',
+                icon: '🎏',
+                description: 'Bannerträger inspirieren Verbündete.',
+                category: ResearchCategory.Tactical,
+                effects: [abilityEffect('Für Gondor!', 'Verbündete in RW-U erhalten +1 DEF.', 'Banner'), shopTier(2)],
+            },
+            {
+                id: 'tac_4',
+                name: 'Artefakte der Valar',
+                icon: '🏪',
+                description: 'Erweitert den Zugriff auf seltene Gegenstände.',
+                category: ResearchCategory.Tactical,
+                effects: [shopTier(3)],
+                unlockCondition: { type: 'round', target: '', value: 6 },
+            },
+        ],
+    },
+    {
+        faction: 'Zwerge',
+        prefix: 'dw',
+        nodes: [
+            {
+                id: 'off_1',
+                name: 'Runenäxte',
+                icon: '⚔️',
+                description: 'Axtkämpfer erhalten geschmiedete Waffen mit Runen.',
+                category: ResearchCategory.Offensive,
+                effects: [statEffect('ANG', 1, 'Axt')],
+            },
+            {
+                id: 'off_2',
+                name: 'Stahlhämmer',
+                icon: '🔨',
+                description: 'Hammerträger schlagen mit noch mehr Wucht zu.',
+                category: ResearchCategory.Offensive,
+                effects: [abilityEffect('Panzerbrechend', '+2 ANG gegen schwere Ziele.', 'Sturm')],
+            },
+            {
+                id: 'off_3',
+                name: 'Belagerungsingenieure',
+                icon: '🔓',
+                description: 'Schaltet Belagerungsingenieure frei.',
+                category: ResearchCategory.Offensive,
+                effects: [unlockUnit('Belagerungsingenieure')],
+            },
+            {
+                id: 'off_4',
+                name: 'Zorn der Ahnen',
+                icon: '🎖️',
+                description: 'Hammerträger kämpfen mit unbändigem Zorn.',
+                category: ResearchCategory.Offensive,
+                effects: [abilityEffect('Zorn des Berges', '+3 ANG unter 50% HP.', 'Sturm')],
+            },
+            {
+                id: 'def_1',
+                name: 'Gromril-Rüstungen',
+                icon: '🛡️',
+                description: 'Infanterie erhält +1 DEF durch Gromril-Rüstung.',
+                category: ResearchCategory.Defensive,
+                effects: [statEffect('DEF', 1, 'Infanterie')],
+            },
+            {
+                id: 'def_2',
+                name: 'Schildwall der Bergfeste',
+                icon: '🧱',
+                description: 'Schildträger perfektionieren ihre Formation.',
+                category: ResearchCategory.Defensive,
+                effects: [abilityEffect('Schildwall', '+4 DEF gegen leichte Angreifer.', 'Schild')],
+            },
+            {
+                id: 'def_3',
+                name: 'Steinige Ausdauer',
+                icon: '❤️',
+                description: 'Infanterie hält mehr Schaden aus.',
+                category: ResearchCategory.Defensive,
+                effects: [statEffect('HP', 2, 'Infanterie')],
+            },
+            {
+                id: 'def_4',
+                name: 'Bergfestung',
+                icon: '🏔️',
+                description: 'Zwerge verteidigen hochgelegene Positionen makellos.',
+                category: ResearchCategory.Defensive,
+                effects: [abilityEffect('Bergfestung', '+2 DEF auf Bergen.', 'Infanterie')],
+                unlockCondition: { type: 'round', target: '', value: 5 },
+            },
+            {
+                id: 'tac_1',
+                name: 'Tunnelnetzwerke',
+                icon: '👣',
+                description: 'Belagerungseinheiten bewegen sich effizienter.',
+                category: ResearchCategory.Tactical,
+                effects: [statEffect('LOG', 1, 'Belagerung')],
+            },
+            {
+                id: 'tac_2',
+                name: 'Meister der Belagerung',
+                icon: '🌲',
+                description: 'Belagerungseinheiten verursachen mehr Schaden an Burgen.',
+                category: ResearchCategory.Tactical,
+                effects: [abilityEffect('Belagerungsmeister', '+2 ANG gegen Burgen.', 'Belagerung')],
+            },
+            {
+                id: 'tac_3',
+                name: 'Banner des Erebor',
+                icon: '🎏',
+                description: 'Bannerträger stärken verbündete Verteidiger.',
+                category: ResearchCategory.Tactical,
+                effects: [abilityEffect('Für Gondor!', 'Verbündete in RW-U erhalten +1 DEF.', 'Banner'), shopTier(2)],
+            },
+            {
+                id: 'tac_4',
+                name: 'Handelshallen',
+                icon: '🏪',
+                description: 'Der Zwergenhandel erschließt neue taktische Optionen.',
+                category: ResearchCategory.Tactical,
+                effects: [shopTier(3)],
+                unlockCondition: { type: 'round', target: '', value: 6 },
+            },
+        ],
+    },
+    {
+        faction: 'Isengard',
+        prefix: 'is',
+        nodes: [
+            {
+                id: 'off_1',
+                name: 'Uruk-Schmieden',
+                icon: '⚔️',
+                description: 'Uruk-hai erhalten stärkere Waffen.',
+                category: ResearchCategory.Offensive,
+                effects: [statEffect('ANG', 1, 'Uruk-hai')],
+            },
+            {
+                id: 'off_2',
+                name: 'Grausame Effizienz',
+                icon: '💥',
+                description: 'Uruk-hai beenden angeschlagene Gegner.',
+                category: ResearchCategory.Offensive,
+                effects: [abilityEffect('Hinrichten', '+2 ANG gegen Ziele unter 50% HP.', 'Uruk-hai')],
+            },
+            {
+                id: 'off_3',
+                name: 'Sprengmeister',
+                icon: '🔓',
+                description: 'Uruk-Sappeure stehen zur Rekrutierung bereit.',
+                category: ResearchCategory.Offensive,
+                effects: [unlockUnit('Uruk-Sappeure')],
+            },
+            {
+                id: 'off_4',
+                name: 'Berserker der Weißen Hand',
+                icon: '🎖️',
+                description: 'Uruk-Berserker kämpfen mit blinder Wut.',
+                category: ResearchCategory.Offensive,
+                effects: [abilityEffect('Berserkerwut', '+2 ANG unter 50% HP.', 'Uruk-hai')],
+            },
+            {
+                id: 'def_1',
+                name: 'Orthanc-Stahl',
+                icon: '🛡️',
+                description: 'Uruk-hai erhalten verbesserte Rüstungen.',
+                category: ResearchCategory.Defensive,
+                effects: [statEffect('DEF', 1, 'Uruk-hai')],
+            },
+            {
+                id: 'def_2',
+                name: 'Pikenwall',
+                icon: '🧱',
+                description: 'Uruk-Pikenträger perfektionieren ihre Schildwall-Taktiken.',
+                category: ResearchCategory.Defensive,
+                effects: [abilityEffect('Schildwall', '+4 DEF gegen leichte Angriffe.', 'Speer')],
+            },
+            {
+                id: 'def_3',
+                name: 'Übermenschliche Ausdauer',
+                icon: '❤️',
+                description: 'Uruk-hai halten mehr aus.',
+                category: ResearchCategory.Defensive,
+                effects: [statEffect('HP', 2, 'Uruk-hai')],
+            },
+            {
+                id: 'def_4',
+                name: 'Festungsdoktrin',
+                icon: '🏰',
+                description: 'Uruk-hai verteidigen Burgen ohne Furcht.',
+                category: ResearchCategory.Defensive,
+                effects: [abilityEffect('Burg-Verteidigung', '+2 DEF auf Burgen.', 'Uruk-hai')],
+                unlockCondition: { type: 'round', target: '', value: 5 },
+            },
+            {
+                id: 'tac_1',
+                name: 'Wargdressur',
+                icon: '🐺',
+                description: 'Wargreiter bewegen sich schneller.',
+                category: ResearchCategory.Tactical,
+                effects: [statEffect('LOG', 1, 'Warg')],
+            },
+            {
+                id: 'tac_2',
+                name: 'Überfall aus den Schatten',
+                icon: '🌲',
+                description: 'Späher nutzen jedes Gelände zu ihrem Vorteil.',
+                category: ResearchCategory.Tactical,
+                effects: [abilityEffect('Geländeanpassung', '+1 DEF in Wald oder Bergen.', 'Späher')],
+            },
+            {
+                id: 'tac_3',
+                name: 'Dominanz der Weißen Hand',
+                icon: '🎏',
+                description: 'Wargreiter sind gefürchtete Gegner für Kavallerie.',
+                category: ResearchCategory.Tactical,
+                effects: [abilityEffect('Warg-Dominanz', '+1 ANG gegen Kavallerie.', 'Warg'), shopTier(2)],
+            },
+            {
+                id: 'tac_4',
+                name: 'Industrielle Versorgung',
+                icon: '🏪',
+                description: 'Saruman optimiert die Kriegswirtschaft.',
+                category: ResearchCategory.Tactical,
+                effects: [shopTier(3)],
+                unlockCondition: { type: 'round', target: '', value: 6 },
+            },
+        ],
+    },
+    {
+        faction: 'Angmar',
+        prefix: 'an',
+        nodes: [
+            {
+                id: 'off_1',
+                name: 'Frostige Klingen',
+                icon: '⚔️',
+                description: 'Ork-Krieger aus dem Norden schlagen härter zu.',
+                category: ResearchCategory.Offensive,
+                effects: [statEffect('ANG', 1, 'Ork')],
+            },
+            {
+                id: 'off_2',
+                name: 'Verderbte Magie',
+                icon: '💀',
+                description: 'Untote nutzen dunkle Magie gegen ihre Feinde.',
+                category: ResearchCategory.Offensive,
+                effects: [abilityEffect('Hinrichten', '+2 ANG gegen angeschlagene Gegner.', 'Untote')],
+            },
+            {
+                id: 'off_3',
+                name: 'Rufer der Grabunholde',
+                icon: '🔓',
+                description: 'Schaltet Grabunholde zur Rekrutierung frei.',
+                category: ResearchCategory.Offensive,
+                effects: [unlockUnit('Grabunholde')],
+            },
+            {
+                id: 'off_4',
+                name: 'Geisterklingen',
+                icon: '🎖️',
+                description: 'Untote ignorieren einen Teil der gegnerischen Verteidigung.',
+                category: ResearchCategory.Offensive,
+                effects: [abilityEffect('Geisterklingen', 'Ignoriert 1 Punkt gegnerischer DEF.', 'Untote')],
+            },
+            {
+                id: 'def_1',
+                name: 'Rüstungen des Nordens',
+                icon: '🛡️',
+                description: 'Orks Angmars erhalten zusätzliche Verteidigung.',
+                category: ResearchCategory.Defensive,
+                effects: [statEffect('DEF', 1, 'Ork')],
+            },
+            {
+                id: 'def_2',
+                name: 'Horden aus Carn Dûm',
+                icon: '👥',
+                description: 'Die Masse der Orks stärkt ihre Verteidigungslinie.',
+                category: ResearchCategory.Defensive,
+                effects: [abilityEffect('Massen an Orks', '+2 ANG und +2 DEF bei Ork-Massen.', 'Ork')],
+            },
+            {
+                id: 'def_3',
+                name: 'Kältegehärtet',
+                icon: '❤️',
+                description: 'Orks überstehen die harschen Bedingungen Angmars.',
+                category: ResearchCategory.Defensive,
+                effects: [statEffect('HP', 2, 'Ork')],
+            },
+            {
+                id: 'def_4',
+                name: 'Festungen des Hexenkönigs',
+                icon: '🏰',
+                description: 'Orks verteidigen Burgen mit schwarzer Magie.',
+                category: ResearchCategory.Defensive,
+                effects: [abilityEffect('Burg-Verteidigung', '+2 DEF auf Burgen.', 'Ork')],
+                unlockCondition: { type: 'round', target: '', value: 5 },
+            },
+            {
+                id: 'tac_1',
+                name: 'Wargpfade des Nordens',
+                icon: '🐺',
+                description: 'Wargreiter bewegen sich schnell durch Schnee und Eis.',
+                category: ResearchCategory.Tactical,
+                effects: [statEffect('LOG', 1, 'Warg')],
+            },
+            {
+                id: 'tac_2',
+                name: 'Hexerei der Schamanen',
+                icon: '🌲',
+                description: 'Orks nutzen dunkle Magie für schnelle Schläge.',
+                category: ResearchCategory.Tactical,
+                effects: [abilityEffect('Ork-Plänkler', '+2 LOG in Wald oder Sumpf.', 'Ork')],
+            },
+            {
+                id: 'tac_3',
+                name: 'Aura der Furcht',
+                icon: '🎏',
+                description: 'Eliteeinheiten versetzen Gegner in Angst.',
+                category: ResearchCategory.Tactical,
+                effects: [abilityEffect('Furcht', 'Feinde in RW 1 haben -1 ANG.', 'Elite'), shopTier(2)],
+            },
+            {
+                id: 'tac_4',
+                name: 'Schwarze Reliquien',
+                icon: '🏪',
+                description: 'Angmar nutzt dunkle Reliquien für taktische Vorteile.',
+                category: ResearchCategory.Tactical,
+                effects: [shopTier(3)],
+                unlockCondition: { type: 'round', target: '', value: 6 },
+            },
+        ],
+    },
+];
+
+const rows: string[] = [
+    'factionName,id,name,icon,description,costAP,prerequisites,category,x,y,unlock_condition_type,unlock_condition_target,unlock_condition_value,unlocks_shop_tier,effect_type,effect_target,effect_value,effect_condition',
+];
+
+const KILL_CONDITION: { type: ResearchUnlockConditionType; target: string; value: number } = {
+    type: 'kill_tag',
+    target: 'Elite',
+    value: 3,
+};
+
+const DEF_ROUND_CONDITION: { type: ResearchUnlockConditionType; target: string; value: number } = {
+    type: 'round',
+    target: '',
+    value: 5,
+};
+
+const TAC_ROUND_CONDITION: { type: ResearchUnlockConditionType; target: string; value: number } = {
+    type: 'round',
+    target: '',
+    value: 6,
+};
+
+factions.forEach(({ faction, prefix, nodes }) => {
+    const offensive = nodes.filter(n => n.category === ResearchCategory.Offensive);
+    const defensive = nodes.filter(n => n.category === ResearchCategory.Defensive);
+    const tactical = nodes.filter(n => n.category === ResearchCategory.Tactical);
+
+    rows.push(
+        ...createLinearNodes(
+            faction,
+            `${prefix}_off`,
+            ResearchCategory.Offensive,
+            offensive,
+            KILL_CONDITION
+        )
+    );
+
+    rows.push(
+        ...createLinearNodes(
+            faction,
+            `${prefix}_def`,
+            ResearchCategory.Defensive,
+            defensive,
+            DEF_ROUND_CONDITION
+        )
+    );
+
+    rows.push(
+        ...createLinearNodes(
+            faction,
+            `${prefix}_tac`,
+            ResearchCategory.Tactical,
+            tactical,
+            TAC_ROUND_CONDITION
+        )
+    );
+});
+
+export const RAW_RESEARCH_DATA = rows.join('\n');
