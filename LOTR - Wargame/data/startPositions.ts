@@ -1,0 +1,19 @@
+export const RAW_START_POSITIONS_DATA = `Team,faction,node_id
+Licht,Zwerge,1
+Licht,Zwerge,30
+Licht,Zwerge,231
+Licht,Elben,237
+Licht,Elben,91
+Licht,Elben,54
+Licht,Gondor/Rohan,269
+Licht,Gondor/Rohan,203
+Licht,Gondor/Rohan,277
+Schatten,Isengard,258
+Schatten,Isengard,191
+Schatten,Isengard,250
+Schatten,Angmar,292
+Schatten,Angmar,89
+Schatten,Angmar,120
+Schatten,Mordor,181
+Schatten,Mordor,160
+Schatten,Mordor,96`;
